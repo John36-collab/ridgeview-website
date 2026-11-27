@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowPilot – Your Business Operations Under Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --dark: #0f172a;
+      --gray: #64748b;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: #fff;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav {
+      display: none;
+      gap: 1.5rem;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    .nav a.active,
+    .nav a:hover {
+      color: var(--primary);
+    }
+
+    .header-actions {
+      display: none;
+      gap: 0.75rem;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--dark);
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--dark);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 4rem 0 5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 3rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--gray);
+      margin-bottom: 1.8rem;
+      max-width: 480px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .dashboard-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+    }
+
+    .status {
+      background: #dcfce7;
+      color: #166534;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.6rem;
+    }
+
+    .stat span {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar .fill {
+      width: 65%;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .small {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section.light {
+      background: var(--light);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .cards-3 {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .two-col {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-top: 1.2rem;
+    }
+
+    .feature-list li {
+      padding: 0.4rem 0;
+      position: relative;
+      padding-left: 1.4rem;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .info-cards {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.3rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .step span {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .feature-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      font-weight: 500;
+    }
+
+    .table-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .table-header,
+    .table-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 1.3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge-green {
+      background: #dcfce7;
+      color: #166534;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .badge-red {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .approval-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--dark);
+      color: #fff;
+      text-align: center;
+      padding: 4rem 0;
+    }
+
+    .cta h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--dark);
+      color: #94a3b8;
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .nav,
+      .header-actions {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .cards-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .two-col {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+
+      .steps {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">FlowPilot</a>
+      <nav class="nav" id="nav">
+        <a href="#">Product</a>
+        <a href="#">Solutions</a>
+        <a href="#">Resources</a>
+        <a href="flow-pilot.html" class="active">FlowPilot</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" class="btn btn-outline">Log in</a>
+        <a href="#" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="badge">AI-Powered Operations Platform</span>
+        <h1>Your Business<br>Operations.<br><span>Under Control</span></h1>
+        <p>FlowPilot helps you detect discrepancies, investigate issues, and resolve operational problems faster — giving you complete clarity on invoices, suppliers and business records.</p>
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-primary">Get Started for free</a>
+          <a href="#" class="btn btn-outline">Explore FlowPilot</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="dashboard-card">
+          <div class="dashboard-header">
+            <span>Dashboard</span>
+            <span class="status">Live</span>
+          </div>
+          <div class="stats-row">
+            <div class="stat"><strong>248</strong><span>Invoices</span></div>
+            <div class="stat"><strong>05</strong><span>Issues</span></div>
+          </div>
+          <div class="progress-bar"><div class="fill"></div></div>
+          <p class="small">5 items need attention</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Small Business Errors Can Create Big Operational Losses.</h2>
+      <div class="cards-3">
+        <div class="card">
+          <h3>Duplicate Invoices</h3>
+          <p>Accidental double payments and repeated entries that drain cash flow.</p>
+        </div>
+        <div class="card">
+          <h3>Order Mismatch</h3>
+          <p>Orders that don’t match invoices or delivery notes create confusion.</p>
+        </div>
+        <div class="card">
+          <h3>Payment Mismatches</h3>
+          <p>Payments that don’t reconcile correctly with supplier records.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEET FLOWPILOT -->
+  <section class="section light">
+    <div class="container two-col">
+      <div>
+        <h2>Meet FlowPilot: Your AI Operations Partner.</h2>
+        <ul class="feature-list">
+          <li>Auto-detects discrepancies</li>
+          <li>Flags conflicting information</li>
+          <li>Suggests resolution paths</li>
+        </ul>
+      </div>
+      <div class="info-cards">
+        <div class="info-card">
+          <strong>How FlowPilot helps</strong>
+          <p>Instantly surfaces problems so your team can act fast.</p>
+        </div>
+        <div class="info-card">
+          <strong>AI Investigation</strong>
+          <p>Analyses documents and highlights root causes automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">From Business Records to Resolved Issues.</h2>
+      <div class="steps">
+        <div class="step"><span>01</span><p>Upload</p></div>
+        <div class="step"><span>02</span><p>Detect</p></div>
+        <div class="step"><span>03</span><p>Investigate</p></div>
+        <div class="step"><span>04</span><p>Review</p></div>
+        <div class="step"><span>05</span><p>Approve</p></div>
+        <div class="step"><span>06</span><p>Resolve</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section class="section light">
+    <div class="container">
+      <h2 class="section-title">Everything You Need to Stay in Control.</h2>
+      <div class="features-grid">
+        <div class="feature-item">AI Document Processing</div>
+        <div class="feature-item">Smart Anomaly Detection</div>
+        <div class="feature-item">Invoice Matching</div>
+        <div class="feature-item">Supplier Management</div>
+        <div class="feature-item">Transaction Tracking</div>
+        <div class="feature-item">Approval Workflows</div>
+        <div class="feature-item">Real-time Alerts</div>
+        <div class="feature-item">Audit Trail</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPLIER VIEW -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Every Supplier. Every Transaction. One Clear View.</h2>
+      <div class="table-card">
+        <div class="table-header">
+          <span>Supplier Overview</span>
+          <span>24 Active · 05 Issues</span>
+        </div>
+        <div class="table-row"><span>Fresh Foods Co.</span><span class="badge-green">OK</span></div>
+        <div class="table-row"><span>TechSupply Ltd</span><span class="badge-red">Issue</span></div>
+        <div class="table-row"><span>Office Essentials</span><span class="badge-green">OK</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI CONTROL -->
+  <section class="section light">
+    <div class="container two-col">
+      <div>
+        <h2>AI handles the investigation.<br>You stay in control.</h2>
+        <ul class="feature-list">
+          <li>Automatic investigation</li>
+          <li>Transparent activity log</li>
+          <li>Human approval required</li>
+        </ul>
+      </div>
+      <div class="approval-card">
+        <h4>Approval Center</h4>
+        <p>Review AI findings and approve resolutions with one click.</p>
+        <a href="#" class="btn btn-primary">Review Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to bring more clarity to your operations?</h2>
+      <a href="#" class="btn btn-white">Get Started for free</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 FlowPilot. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+
+    if (menuToggle && nav) {
+      menuToggle.addEventListener('click', () => {
+        if (nav.style.display === 'flex') {
+          nav.style.display = 'none';
+        } else {
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.position = 'absolute';
+          nav.style.top = '64px';
+          nav.style.left = '0';
+          nav.style.right = '0';
+          nav.style.background = '#fff';
+          nav.style.padding = '1rem';
+          nav.style.borderBottom = '1px solid #e2e8f0';
+          nav.style.gap = '1rem';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
